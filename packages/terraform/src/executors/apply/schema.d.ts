@@ -6,4 +6,6 @@ export interface ApplyExecutorSchema {
   lockTimeout?: string
   noColor?: boolean
   parallelism?: number
+  var?: {[key: string]:string}
+  varFile?: string
 }

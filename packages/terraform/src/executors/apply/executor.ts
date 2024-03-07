@@ -19,6 +19,8 @@ function toCmdOptions(options: ApplyExecutorSchema): string[] {
     ...(options.noColor !== undefined ? ['-no-color'] : []),
     ...(options.parallelism !== undefined ? [`-parallelism=${options.parallelism}`] : []),
     ...(options.planFile !== undefined ? [`${options.planFile}`] : []),
+    ...(options.var !== undefined ? Object.entries(options.var).map(([k,v]) => `-var='${k}=${v}'`) : []),
+    ...(options.varFile !== undefined ? [`-var-file=${options.varFile}`] : []),
   ]
 }
 
