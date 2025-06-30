@@ -31,7 +31,7 @@ describe('terraform e2e', () => {
     const result = await runNxCommandAsync(`initialize ${project}`);
     expect(result.stdout).toContain('Terraform has been successfully initialized!');
   }, 120000);
-  
+
   it('should create project', async () => {
     const project = uniq('terraform');
     await runNxCommandAsync(
@@ -48,7 +48,7 @@ describe('terraform e2e', () => {
         `generate @loft-orbital/terraform:project ${project} --directory subdir`
       );
       expect(() =>
-        checkFilesExist(`libs/subdir/${project}/src/main.tf`, `libs/subdir/${project}/README.md`)
+        checkFilesExist(`apps/subdir/${project}/src/main.tf`, `apps/subdir/${project}/README.md`)
       ).not.toThrow();
     }, 120000);
   });
@@ -60,7 +60,7 @@ describe('terraform e2e', () => {
       await runNxCommandAsync(
         `generate @loft-orbital/terraform:project ${projectName} --tags e2etag,e2ePackage`
       );
-      const project = readJson(`libs/${projectName}/project.json`);
+      const project = readJson(`apps/${projectName}/project.json`);
       expect(project.tags).toEqual(['e2etag', 'e2ePackage']);
     }, 120000);
   });
