@@ -56,7 +56,7 @@ export default async function (tree: Tree, options: ProjectGeneratorSchema) {
       namedInputs: {
         tfSource: ["{projectRoot}/src/*.tf"],
         tfWD: ["{projectRoot}/src/.terraform"],
-        tfPlan: ["{projectRoot}/src/tfplan"] 
+        tfPlan: ["{projectRoot}/src/tfplan"]
       },
       targetDefaults: {
         initialize: {
@@ -82,7 +82,7 @@ export default async function (tree: Tree, options: ProjectGeneratorSchema) {
             cacheableOperations: ["initialize", "plan", "apply"]
           }
         }
-      }    
+      }
     }
   )
   addProjectConfiguration(
@@ -126,7 +126,7 @@ export default async function (tree: Tree, options: ProjectGeneratorSchema) {
             planFile: "tfplan"
           },
           dependsOn: ["plan"]
-        }     
+        }
       },
       tags: normalizedOptions.parsedTags,
     }

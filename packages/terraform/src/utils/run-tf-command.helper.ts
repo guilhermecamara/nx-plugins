@@ -3,13 +3,15 @@ import { execSync } from 'child_process'
 
 export function runTfCommand(
   context: ExecutorContext,
-  command: 'init' | 'plan' | 'fmt' | 'validate' | 'apply',
+  command: 'init' | 'plan' | 'fmt' | 'validate' | 'apply' | 'workspace',
   params: string[],
 ): { success: boolean } {
   const cwd = context?.projectsConfigurations?.projects[context.projectName]?.sourceRoot || process.cwd()
 
   // Create the command to execute
-  const execute = ['terraform', command, ...params].join(' ')
+  const execute = command === 'workspace'
+    ? ['terraform', 'workspace', ...params].join(' ')
+    : ['terraform', command, ...params].join(' ')
 
   try {
     console.log(`Executing command: ${execute}`)

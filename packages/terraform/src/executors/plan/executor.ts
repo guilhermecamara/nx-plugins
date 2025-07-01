@@ -6,6 +6,15 @@ export default async function runExecutor(
   options: PlanExecutorSchema,
   context: ExecutorContext,
 ) {
+  if (options.workspace) {
+    const selectResult = runTfCommand(context, 'workspace', ['select', options.workspace])
+    if (!selectResult.success) {
+      const createResult = runTfCommand(context, 'workspace', ['new', options.workspace])
+      if (!createResult.success) {
+        return { success: false }
+      }
+    }
+  }
   const cmdopt = ["-input=false", ...toCmdOptions(options)]
   return runTfCommand(context, "plan", cmdopt)
 }
@@ -21,7 +30,7 @@ function toCmdOptions(options: PlanExecutorSchema ): string[] {
     ...(options.detailedExitCode !== undefined ? ['-detailed-exitcode'] : []),
     ...(options.json!== undefined ? ['-json'] : []),
     ...(options.lock !== undefined ? [`-lock=${options.lock}`] : []),
-    ...(options.lockTimeout !== undefined ? [`-lock-timeout=${options.lockTimeout}`] : []), 
+    ...(options.lockTimeout !== undefined ? [`-lock-timeout=${options.lockTimeout}`] : []),
     ...(options.noColor !== undefined ? ['-no-color'] : []),
     ...(options.out !== undefined ? [`-out=${options.out}`] : []),
     ...(options.parallelism !== undefined ? [`-parallelism=${options.parallelism}`] : []),

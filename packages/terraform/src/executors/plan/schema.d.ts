@@ -1,4 +1,5 @@
 export interface PlanExecutorSchema {
+  workspace?: string;
   refresh?: boolean
   replace?: string
   target?: string
