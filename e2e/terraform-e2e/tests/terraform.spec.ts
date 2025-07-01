@@ -64,4 +64,18 @@ describe('terraform e2e', () => {
       expect(project.tags).toEqual(['e2etag', 'e2ePackage']);
     }, 120000);
   });
+
+  describe('--workspace', () => {
+    it('should use specified workspace for project', async () => {
+      const project = uniq('terraform');
+      await runNxCommandAsync(`generate @loft-orbital/terraform:project ${project}`);
+
+      const initResult = await runNxCommandAsync(`initialize ${project}`);
+      expect(initResult.stdout).toContain('Terraform has been successfully initialized!');
+
+      const planResult = await runNxCommandAsync(`plan ${project} --workspace=testws`);
+      expect(planResult.stdout).toContain('terraform workspace select testws');
+      expect(planResult.stdout).toContain('terraform plan');
+    }, 120000);
+  });
 });
